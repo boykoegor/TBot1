@@ -1,7 +1,6 @@
 package groupId.controller;
 
 import lombok.extern.log4j.Log4j;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
