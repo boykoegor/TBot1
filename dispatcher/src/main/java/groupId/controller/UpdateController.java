@@ -2,6 +2,7 @@ package groupId.controller;
 
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Component
 @Log4j
@@ -10,5 +11,43 @@ public class UpdateController {
 
     public void registerBot(TelegramBot telegramBot){
         this.telegramBot = telegramBot;
+    }
+
+    public void procesUpdate(Update update){
+        if (update == null){
+            log.error("Received update is null");
+            return;
+        }
+
+        if(update.getMessage() != null){
+            distributeMessageByType(update);
+        } else {
+            log.error("Received unsupported message type "+update);
+        }
+    }
+
+    private void distributeMessageByType(Update update) {
+        var message = update.getMessage();
+        if (message.getText() != null){
+            processTextMessage(update);
+        } else if (message.getDocument() != null){
+            processDocumentMessage(update);
+        } else if (message.getPhoto() != null){
+            processPhotoMessage(update);
+        } else {
+            setUnsupportedMessageTypeView(update);
+        }
+    }
+
+    private void setUnsupportedMessageTypeView(Update update) {
+    }
+
+    private void processPhotoMessage(Update update) {
+    }
+
+    private void processDocumentMessage(Update update) {
+    }
+
+    private void processTextMessage(Update update) {
     }
 }
